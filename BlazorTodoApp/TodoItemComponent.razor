@@ -1,0 +1,30 @@
+﻿<li>
+    <input type="checkbox" checked="@IsDone" value="@IsDone" @onchange="OnIsDoneChanged" />
+    <input value="@Title" @onchange="OnTitleChanged" />
+</li>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public EventCallback<string> TitleChanged { get; set; }
+
+    protected async Task OnTitleChanged(ChangeEventArgs e)
+    {
+        Title = (string)e.Value;
+        await TitleChanged.InvokeAsync(Title);
+    }
+
+    [Parameter]
+    public bool IsDone { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsDoneChanged { get; set; }
+
+    protected async Task OnIsDoneChanged(ChangeEventArgs e)
+    {
+        IsDone = (bool)e.Value;
+        await IsDoneChanged.InvokeAsync(IsDone);
+    }
+}
