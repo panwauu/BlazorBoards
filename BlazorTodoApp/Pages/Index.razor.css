@@ -1,0 +1,6 @@
+﻿.boards {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+}

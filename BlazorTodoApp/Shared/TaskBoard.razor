@@ -1,10 +1,9 @@
-﻿<div>
-    <h3>@BoardData.Title</h3>
+﻿<div class="card board">
+    <h5>@BoardData.Title</h5>
     <div>
-        @foreach (var card in BoardData.Tasks)
+        @foreach (var index in BoardData.Tasks.Select((e, i) => i))
         {
-            <!--<CardComponent Card="card" />-->
-            <div>@card.Title</div>
+            <TaskOverview @bind-TaskData="BoardData.Tasks[index]" />
         }
     </div>
 </div>
@@ -12,4 +11,7 @@
 @code {
     [Parameter]
     public Board BoardData { get; set; }
+
+    [Parameter]
+    public EventCallback<Board> BoardDataChanged { get; set; }
 }

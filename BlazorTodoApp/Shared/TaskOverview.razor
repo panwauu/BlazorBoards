@@ -1,0 +1,11 @@
+﻿<div class="card">
+    <div>@TaskData.Title</div>
+</div>
+
+@code {
+    [Parameter]
+    public TaskItem TaskData { get; set; }
+
+    [Parameter]
+    public EventCallback<TaskItem> TaskDataChanged { get; set; }
+}

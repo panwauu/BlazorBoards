@@ -2,11 +2,10 @@
 
 <PageTitle>BlazorBoards</PageTitle>
 
-<div>
-    <h1>@_Boards.Count</h1>
-    @foreach (var board in _Boards)
+<div class="boards">
+    @foreach (var index in _Boards.Select((e, i) => i))
     {
-        <TaskBoard BoardData="board" />
+        <TaskBoard @bind-BoardData="_Boards[index]" />
     }
 </div>
 
@@ -48,5 +47,9 @@ Labels
         _Boards.Add(new Board("In progress") { });
         _Boards.Add(new Board("Backlog") { });
         _Boards.Add(new Board("Done") { });
+        _Boards[0].Tasks.Add(new TaskItem("Task 1") { });
+        _Boards[0].Tasks.Add(new TaskItem("Task 2") { });
+        _Boards[1].Tasks.Add(new TaskItem("Task 1") { });
+        _Boards[1].Tasks.Add(new TaskItem("Task 2") { });
     }
 }
