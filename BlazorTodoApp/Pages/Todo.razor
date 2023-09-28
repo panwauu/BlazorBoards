@@ -15,14 +15,14 @@
 <button @onclick="AddTodo">Add todo</button>
 
 @code {
-    private List<TodoItem> todos = new() { new TodoItem { Title = "Todo 1", IsDone = true } };
+    private List<ChecklistItem> todos = new() { };
 
     public int index;
 
     private string newTodoTitle = string.Empty;
     private void AddTodo()
     {
-        todos.Add(new TodoItem { Title = newTodoTitle });
+        todos.Add(new ChecklistItem(newTodoTitle) { });
         newTodoTitle = string.Empty;
     }
 }

@@ -1,9 +1,52 @@
 ﻿@page "/"
 
-<PageTitle>ToDos</PageTitle>
+<PageTitle>BlazorBoards</PageTitle>
 
-<h1>Hello, world!</h1>
+<div>
+    <h1>@_Boards.Count</h1>
+    @foreach (var board in _Boards)
+    {
+        <TaskBoard BoardData="board" />
+    }
+</div>
 
-Welcome to your new app.
+<!--
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+Boards -> BoardComponent
+   Cards (Deadline, Title, Description, ToDos, ...) -> CardOverview, CardDetails
+
+C#-Classes
+Board
+Task
+ChecklistItem
+Label
+
+
+SQL:
+Boards
+- id
+- name
+
+Tasks
+- id
+- board_id
+- [label_id]
+- title
+...
+
+Labels
+- id
+- title
+- color
+-->
+@code {
+    private new List<Board> _Boards { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _Boards = new List<Board>();
+        _Boards.Add(new Board("In progress") { });
+        _Boards.Add(new Board("Backlog") { });
+        _Boards.Add(new Board("Done") { });
+    }
+}

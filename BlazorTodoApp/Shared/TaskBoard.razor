@@ -1,0 +1,15 @@
+﻿<div>
+    <h3>@BoardData.Title</h3>
+    <div>
+        @foreach (var card in BoardData.Tasks)
+        {
+            <!--<CardComponent Card="card" />-->
+            <div>@card.Title</div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Board BoardData { get; set; }
+}
