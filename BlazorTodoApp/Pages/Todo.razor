@@ -5,9 +5,9 @@
 <h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
 
 <ul>
-    @foreach (var element in todos.Select((e,i) => new { Todo = e, Index = i}))
+    @foreach (var index in todos.Select((e,i) => i))
     {
-        <TodoItemComponent @bind-TodoItem="todos[element.Index]" />
+        <TodoItemComponent @bind-TodoItem="todos[index]" />
     }
 </ul>
 
