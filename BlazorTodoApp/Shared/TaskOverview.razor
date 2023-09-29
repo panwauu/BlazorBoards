@@ -1,5 +1,15 @@
 ﻿<div class="card">
+    <div class="task-header">
+        @foreach(var label in TaskData.Labels)
+        {
+            <div class="task-label" style="background:@label.Background;color:@label.Color">@label.Title</div>
+        }
+    </div>
     <div>@TaskData.Title</div>
+    <div class="task-bottom">
+        <div class="task-checklist" hidden="@(TaskData.Checklist.Count == 0)">@TaskData.Checklist.FindAll(e => e.IsDone).Count/@TaskData.Checklist.Count</div>
+        <div class="task-deadline">@TaskData.Deadline?.ToString("d.M.y, mm:hh")</div>
+    </div>
 </div>
 
 @code {

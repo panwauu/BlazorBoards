@@ -5,6 +5,9 @@
         {
             <TaskOverview @bind-TaskData="BoardData.Tasks[index]" />
         }
+        <div class="add-task">
+            <button class="btn btn-outline-primary" @onclick="AddTask">+</button>
+        </div>
     </div>
 </div>
 
@@ -14,4 +17,10 @@
 
     [Parameter]
     public EventCallback<Board> BoardDataChanged { get; set; }
+
+    private void AddTask()
+    {
+        BoardData.Tasks.Add(new TaskItem("Task"));
+        BoardDataChanged.InvokeAsync(BoardData);
+    }
 }

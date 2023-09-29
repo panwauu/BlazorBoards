@@ -51,5 +51,10 @@ Labels
         _Boards[0].Tasks.Add(new TaskItem("Task 2") { });
         _Boards[1].Tasks.Add(new TaskItem("Task 1") { });
         _Boards[1].Tasks.Add(new TaskItem("Task 2") { });
+
+        _Boards[0].Tasks[0].Labels.Add(new Label("prio1", "black", "red"));
+        _Boards[0].Tasks[0].Labels.Add(new Label("prio2", "white", "blue"));
+        _Boards[0].Tasks[0].Checklist.Add(new ChecklistItem("Checklist 1"));
+        _Boards[0].Tasks[0].Deadline = DateTime.Now;
     }
 }

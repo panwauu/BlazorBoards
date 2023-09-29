@@ -23,13 +23,13 @@ public class TaskItem
     public string Title { get; set; }
     public string? Description { get; set; }
     public DateTime? Deadline { get; set; }
-    public List<string> Labels { get; set; }
+    public List<Label> Labels { get; set; }
     public List<ChecklistItem> Checklist { get; set; }
 
     public TaskItem(string title)
     {
         Title = title;
-        Labels = new List<string>();
+        Labels = new List<Label>();
         Checklist = new List<ChecklistItem>();
     }
 }
@@ -43,5 +43,19 @@ public class Board
     {
         Title = title;
         Tasks = new List<TaskItem>();
+    }
+}
+
+public class Label
+{
+    public string Title { get; set; }
+    public string Color { get; set; }
+    public string Background { get; set; }
+
+    public Label(string title, string color, string background)
+    {
+        Title = title;
+        Color = color;
+        Background = background;
     }
 }
