@@ -66,3 +66,12 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.editable-input {
+    outline: none;
+    border: 0;
+}
+
+.editable-input:focus, .editable-input:active {
+    border: 1px solid black;
+}
