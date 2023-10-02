@@ -5,20 +5,20 @@
 
 @code {
     [Parameter]
-    public ChecklistItem TodoItem { get; set; }
+    public ChecklistItem TodoItem { get; set; } = default!;
 
     [Parameter]
     public EventCallback<ChecklistItem> TodoItemChanged { get; set; }
 
     protected async Task OnTitleChanged(ChangeEventArgs e)
     {
-        TodoItem.Title = (string)e.Value;
+        TodoItem.Title = (string)(e?.Value ?? "");
         await TodoItemChanged.InvokeAsync(TodoItem);
     }
 
     protected async Task OnIsDoneChanged(ChangeEventArgs e)
     {
-        TodoItem.IsDone = (bool)e.Value;
+        TodoItem.IsDone = (bool)(e?.Value ?? false);
         await TodoItemChanged.InvokeAsync(TodoItem);
     }
 }
