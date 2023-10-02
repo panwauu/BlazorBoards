@@ -5,10 +5,13 @@
 <div class="boards">
     @foreach (var index in _Boards.Select((e, i) => i))
     {
-        <TaskBoard @bind-BoardData="_Boards[index]" 
-            globalDragStart="@dragStart" 
-            globalDragDrop="@((a) => dragDrop(a.insertAtBoardId,a.insertAtBoardPosition))" 
-        />
+        <TaskBoard @bind-BoardData="_Boards[index]"
+            DragInsertIndex="@(dragHelper.InsertAtBoard != null && _Boards[index].Id == dragHelper.InsertAtBoard.Id ? dragHelper.InsertAtBoardPosition: -1)"
+            globalDragStart="@( task => dragHelper.dragStart(_Boards[index], task) )" 
+            globalDragDrop="@( e => dragHelper.drop(_Boards[index], e.insertAtBoardPosition))" 
+            globalDragEnd="@( e => dragHelper.dragEnd() )"
+            globalDragEnter="@( i => dragHelper.dragEnter(_Boards[index], i) )"
+            globalDragLeave="@( () => dragHelper.dragLeave() )" />
     }
 </div>
 
@@ -61,48 +64,62 @@ Labels
         _Boards[0].Tasks[0].Deadline = DateTime.Now;
     }
 
+    private class DragHelper
+    {
+        public Board? DraggedTaskBoard { get; private set; } = null;
+        public TaskItem? DraggedTask { get; private set; } = null;
 
-    private TaskItem? DraggedTask;
-    private void dragStart(TaskItem task)
-    {
-        DraggedTask = task;
-    }
-    private void dragEnd()
-    {
-        DraggedTask = null;
-    }
-    private void dragDrop(string insertAtBoardId, int insertAtBoardPosition)
-    {
-        if (DraggedTask == null) return;
+        public Board? InsertAtBoard { get; private set; } = null;
+        public int InsertAtBoardPosition { get; private set; } = -1;
 
-        Board? boardToRemoveFrom = _Boards.Find(b => b.Tasks.Contains(DraggedTask));
-        if (boardToRemoveFrom == null)
+        public void dragStart(Board board, TaskItem task)
         {
+            DraggedTaskBoard = board;
+            DraggedTask = task;
+            InsertAtBoard = null;
+            InsertAtBoardPosition = -1;
+        }
+        public void dragEnd()
+        {
+            DraggedTaskBoard = null;
             DraggedTask = null;
-            return;
+            InsertAtBoard = null;
+            InsertAtBoardPosition = -1;
         }
-
-        int positionToRemoveFrom = boardToRemoveFrom.Tasks.FindIndex(t => t.Id == DraggedTask.Id);
-        if (positionToRemoveFrom == -1)
+        public void drop(Board board, int insertAtBoardPosition)
         {
+            if (DraggedTask == null || DraggedTaskBoard == null) return;
+
+            int positionToRemoveFrom = DraggedTaskBoard.Tasks.FindIndex(t => t.Id == DraggedTask.Id);
+            if (positionToRemoveFrom == -1)
+            {
+                DraggedTask = null;
+                DraggedTaskBoard = null;
+                return;
+            }
+
+            if (board.Id == DraggedTaskBoard.Id && positionToRemoveFrom < insertAtBoardPosition)
+            {
+                insertAtBoardPosition--;
+            }
+
+            DraggedTaskBoard.Tasks.Remove(DraggedTask);
+            board.Tasks.Insert(insertAtBoardPosition, DraggedTask);
             DraggedTask = null;
-            return;
         }
 
-        Board? boardToInsertTo = _Boards.Find(b => b.Id == insertAtBoardId);
-        if (boardToInsertTo == null) 
+        public void dragEnter(Board board, int insertAtBoardPosition)
         {
-            DraggedTask = null; 
-            return;
+            Console.WriteLine(insertAtBoardPosition.ToString());
+            InsertAtBoard = board;
+            InsertAtBoardPosition = insertAtBoardPosition;
         }
-
-        if (boardToInsertTo.Id == boardToRemoveFrom.Id && positionToRemoveFrom < insertAtBoardPosition)
+        public void dragLeave()
         {
-            insertAtBoardPosition--;
+            InsertAtBoard = null;
+            InsertAtBoardPosition = -1;
         }
-
-        boardToRemoveFrom.Tasks.Remove(DraggedTask);
-        boardToInsertTo.Tasks.Insert(insertAtBoardPosition, DraggedTask);
-        DraggedTask = null;
     }
+
+    private DragHelper dragHelper = new();
 }
