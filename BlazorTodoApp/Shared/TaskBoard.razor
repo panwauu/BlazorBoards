@@ -6,7 +6,8 @@
             <div hidden="@(DragInsertIndex != index)" style="width: 100%; height: 2px; background: red;"></div>
             <div draggable="true"
                  id="@BoardData.Tasks[index].Id"
-            ondragover="event.preventDefault();"
+            @ondragover="@( () => globalDragEnter.InvokeAsync(index) )"
+            @ondragover:preventDefault="true"
             @key=@BoardData.Tasks[index].Id
             @ondragstart="@( () => globalDragStart.InvokeAsync(BoardData.Tasks[index]))"
             @ondragend="@( () => globalDragEnd.InvokeAsync() )"
