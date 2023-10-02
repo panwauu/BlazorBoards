@@ -3,9 +3,20 @@
     <div>
         @foreach (var index in BoardData.Tasks.Select((e, i) => i))
         {
-            <TaskOverview @bind-TaskData="BoardData.Tasks[index]" />
+            <div draggable="true" 
+                id="@BoardData.Tasks[index].Id" 
+                ondragover="event.preventDefault();" 
+                @key=@BoardData.Tasks[index].Id
+                @ondragstart="@( (e) => ondragstart(e, BoardData.Tasks[index]))"
+                @ondrop="@( () => ondropOverAFriend(BoardData.Tasks[index], index))"
+            >
+                <TaskOverview @bind-TaskData="BoardData.Tasks[index]" />
+            </div>
         }
-        <div class="add-task">
+        <div class="add-task" 
+            ondragover="event.preventDefault();"
+            @ondrop="ondropBottom"
+        >
             <button class="btn btn-outline-primary" @onclick="AddTask">+</button>
         </div>
     </div>
@@ -18,9 +29,31 @@
     [Parameter]
     public EventCallback<Board> BoardDataChanged { get; set; }
 
+    [Parameter]
+    public EventCallback<TaskItem> globalDragStart { get; set; }
+    [Parameter]
+    public EventCallback globalDragEnd { get; set; }
+    [Parameter]
+    public EventCallback<(string insertAtBoardId, int insertAtBoardPosition)> globalDragDrop { get; set; }
+
     private void AddTask()
     {
         BoardData.Tasks.Add(new TaskItem("Task"));
         BoardDataChanged.InvokeAsync(BoardData);
+    }
+
+
+    public async Task ondropOverAFriend(TaskItem task, int index)
+    {
+        await globalDragDrop.InvokeAsync((BoardData.Id, index));
+    }
+    public async Task ondropBottom()
+    {
+        await globalDragDrop.InvokeAsync((BoardData.Id, BoardData.Tasks.Count));
+    }
+
+    public async Task ondragstart(DragEventArgs e, TaskItem task)
+    {
+        await globalDragStart.InvokeAsync(task);
     }
 }

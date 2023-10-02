@@ -20,6 +20,7 @@
 
 public class TaskItem
 {
+    public string Id { get; set; }
     public string Title { get; set; }
     public string? Description { get; set; }
     public DateTime? Deadline { get; set; }
@@ -28,6 +29,7 @@ public class TaskItem
 
     public TaskItem(string title)
     {
+        Id = Guid.NewGuid().ToString();
         Title = title;
         Labels = new List<Label>();
         Checklist = new List<ChecklistItem>();
@@ -36,11 +38,13 @@ public class TaskItem
 
 public class Board
 {
+    public string Id { get; set; }
     public string Title { get; set; }
     public List<TaskItem> Tasks { get; set; }
 
     public Board(string title)
     {
+        Id = Guid.NewGuid().ToString();
         Title = title;
         Tasks = new List<TaskItem>();
     }
