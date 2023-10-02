@@ -1,7 +1,7 @@
-﻿<li>
+﻿<div>
     <input type="checkbox" checked="@TodoItem.IsDone" value="@TodoItem.IsDone" @onchange="OnIsDoneChanged" />
-    <input value="@TodoItem.Title" @onchange="OnTitleChanged" />
-</li>
+    <input value="@TodoItem.Title" @onchange="OnTitleChanged" class="editable-input" />
+</div>
 
 @code {
     [Parameter]

@@ -1,0 +1,28 @@
+﻿.title {
+    font-size: larger;
+    width: 100%;
+}
+
+.editable-input {
+    outline: none;
+    border: 0;
+}
+
+.editable-input:focus, .editable-input:active {
+    border: 1px solid black;
+}
+
+.task-labels {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 5px 0;
+}
+
+.task-label {
+    border-radius: 4px;
+    font-size: smaller;
+    background-color: gray;
+    color: white;
+    padding: 2px 5px;
+    margin: 0 4px 5px 0;
+}

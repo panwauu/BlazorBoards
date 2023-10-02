@@ -1,0 +1,71 @@
+﻿<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+    <div class="modal-dialog" role="document" style="z-index: 1055;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input class="modal-title editable-input title" @bind-value="@TaskData.Title" />
+            </div>
+            <div class="modal-body body">
+                <h5>Labels</h5>
+                <div class="task-labels">
+                @foreach (var label in TaskData.Labels)
+                {
+                    <div class="task-label" style="background:@label.Background;color:@label.Color">@label.Title</div>
+                }
+                </div>
+                <h5 style="margin-top: 10px;">Description</h5>
+                <InputTextArea @bind-Value="@TaskData.Description" placeholder="Description" style="width: 100%;"></InputTextArea>
+                <h5 style="margin-top: 10px;">Deadline</h5>
+                <InputDate @bind-Value="@TaskData.Deadline" />
+                <h5 style="margin-top: 10px;">Checklist</h5>
+                @foreach (var index in TaskData.Checklist.Select((e, i) => i))
+                {
+                    <TodoItemComponent @bind-TodoItem="TaskData.Checklist[index]" />
+                }
+                <button class="btn btn-outline-primary" @onclick="addChecklist">+</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
+            </div>
+        </div>
+    </div>
+    @if (ShowBackdrop)
+    {
+        <div class="modal-backdrop fade show" @onclick="() => Close()"></div>
+    }
+</div>
+
+
+@code {
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public void Open()
+    {
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void Close()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+        TaskDataChanged.InvokeAsync(TaskData);
+    }
+
+    [Parameter]
+    public TaskItem TaskData { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback<TaskItem> TaskDataChanged { get; set; }
+
+    private void addChecklist()
+    {
+        TaskData.Checklist.Add(new ChecklistItem("Checklist item"));
+        TaskDataChanged.InvokeAsync(TaskData);
+    }
+}
