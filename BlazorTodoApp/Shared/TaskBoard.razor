@@ -30,7 +30,7 @@
 
 @code {
     [Parameter]
-    public Board BoardData { get; set; }
+    public Board BoardData { get; set; } = default!;
 
     [Parameter]
     public EventCallback<Board> BoardDataChanged { get; set; }

@@ -14,7 +14,7 @@
 
 @code {
     [Parameter]
-    public TaskItem TaskData { get; set; }
+    public TaskItem TaskData { get; set; } = default!;
 
     [Parameter]
     public EventCallback<TaskItem> TaskDataChanged { get; set; }

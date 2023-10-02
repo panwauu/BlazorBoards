@@ -45,7 +45,7 @@ Labels
 - color
 -->
 @code {
-    private new List<Board> _Boards { get; set; }
+    private List<Board> _Boards { get; set; } = new();
 
     protected override void OnInitialized()
     {
@@ -110,7 +110,6 @@ Labels
 
         public void dragEnter(Board board, int insertAtBoardPosition)
         {
-            Console.WriteLine(insertAtBoardPosition.ToString());
             InsertAtBoard = board;
             InsertAtBoardPosition = insertAtBoardPosition;
         }
