@@ -26,12 +26,24 @@
 .task-checklist {
     border-radius: 4px;
     font-size: 0.7rem;
-    padding: 3px;
     margin: 0 5px 0 0;
+    border: 1px solid var(--bs-gray-700);
+    color: var(--bs-gray-700);
+    background: var(--bs-gray-300);
+    padding: 0 2px;
 }
 
 .task-deadline {
     border-radius: 4px;
     font-size: 0.7rem;
-    padding: 2px;
+    border: 1px solid var(--bs-gray-700);
+    color: var(--bs-gray-700);
+    background: var(--bs-gray-300);
+    padding: 0 2px;
+}
+
+.task-deadline-overdue {
+    color: var(--bs-red);
+    border: 1px solid var(--bs-red);
+    background: #dc354530;
 }
