@@ -7,9 +7,9 @@
 <div class="labels">
     @foreach (var index in _Labels.Select((e, i) => i))
     {
-        <div class="label-text" style="background: @_Labels[index].Background">@_Labels[index].Title</div>
-        <div class="label-background" style="background: @_Labels[index].Background">@_Labels[index].Background</div>
-        <div class="label-color" style="background: @_Labels[index].Background">@_Labels[index].Color</div>
+        <input type="text" class="label-text editable-input" style="background: @_Labels[index].Background; color: @_Labels[index].Color" @bind-value="_Labels[index].Title" />
+        <input class="label-background editable-input" type="color" style="background: @_Labels[index].Background" @bind-value="_Labels[index].Background" />
+        <input class="label-color editable-input" type="color" style="background: @_Labels[index].Background" @bind-value="_Labels[index].Color" />
     }
 </div>
 
@@ -27,6 +27,7 @@
 
     private void AddLabel()
     {
-        _Labels.Add(new Label("Label", "#000000", "#FF0000"));
+        var random = new Random();
+        _Labels.Add(new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}"));
     }
 }
