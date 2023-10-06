@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<PageTitle>BlazorBoards</PageTitle>
+<PageTitle>Boards</PageTitle>
 
 <div class="boards">
     @foreach (var index in _Boards.Select((e, i) => i))
@@ -15,35 +15,6 @@
     }
 </div>
 
-<!--a
-
-Boards -> BoardComponent
-   Cards (Deadline, Title, Description, ToDos, ...) -> CardOverview, CardDetails
-
-C#-Classes
-Board
-Task
-ChecklistItem
-Label
-
-
-SQL:
-Boards
-- id
-- name
-
-Tasks
-- id
-- board_id
-- [label_id]
-- title
-...
-
-Labels
-- id
-- title
-- color
--->
 @code {
     private List<Board> _Boards { get; set; } = new();
 

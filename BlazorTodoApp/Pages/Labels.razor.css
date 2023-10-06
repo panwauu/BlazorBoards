@@ -1,0 +1,24 @@
+﻿.labels {
+    display: grid;
+    grid-template-columns: 200px 80px 80px;
+    grid-row-gap: 5px;
+    --label-border-radius: 7px;
+}
+
+.label-text {
+    grid-column: 1;
+    border-radius: var(--label-border-radius) 0 0 var(--label-border-radius);
+    padding: 5px;
+}
+
+.label-background {
+    grid-column: 2;
+    border-radius: 0;
+    padding: 5px;
+}
+
+.label-color {
+    grid-column: 3;
+    border-radius: 0 var(--label-border-radius) var(--label-border-radius) 0;
+    padding: 5px;
+}

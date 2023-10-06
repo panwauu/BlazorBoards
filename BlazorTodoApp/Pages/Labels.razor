@@ -1,0 +1,32 @@
+﻿@page "/labels"
+
+<PageTitle>Labels</PageTitle>
+
+<h3>Labels</h3>
+
+<div class="labels">
+    @foreach (var index in _Labels.Select((e, i) => i))
+    {
+        <div class="label-text" style="background: @_Labels[index].Background">@_Labels[index].Title</div>
+        <div class="label-background" style="background: @_Labels[index].Background">@_Labels[index].Background</div>
+        <div class="label-color" style="background: @_Labels[index].Background">@_Labels[index].Color</div>
+    }
+</div>
+
+<button class="btn btn-primary" @onclick="AddLabel">+</button>
+
+@code {
+    private List<Label> _Labels { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        _Labels = new List<Label>();
+        _Labels.Add(new Label("prio1", "#000000", "#0000FF"));
+        _Labels.Add(new Label("prio2", "#000000", "#00FF00"));
+    }
+
+    private void AddLabel()
+    {
+        _Labels.Add(new Label("Label", "#000000", "#FF0000"));
+    }
+}
