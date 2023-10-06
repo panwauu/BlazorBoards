@@ -1,4 +1,4 @@
-namespace BlazorTodoApp.Data
+namespace BlazorBoards.Data
 {
     public class WeatherForecast
     {
