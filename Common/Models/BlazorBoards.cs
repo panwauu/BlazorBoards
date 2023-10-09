@@ -57,6 +57,7 @@ public class Board
 
 public class Label
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Title { get; set; }
     public string Color { get; set; }
     public string Background { get; set; }

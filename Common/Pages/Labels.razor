@@ -1,4 +1,5 @@
 ﻿@page "/labels"
+@inject HttpClient Http
 
 <PageTitle>Labels</PageTitle>
 
@@ -18,11 +19,14 @@
 @code {
     private List<Label> _Labels { get; set; } = new();
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         _Labels = new List<Label>();
         _Labels.Add(new Label("prio1", "#000000", "#0000FF"));
         _Labels.Add(new Label("prio2", "#000000", "#00FF00"));
+
+        var labels = await Http.GetFromJsonAsync<List<Label>>("api/labels");
+        Console.WriteLine(labels?.ElementAt(0)?.Title);
     }
 
     private void AddLabel()
