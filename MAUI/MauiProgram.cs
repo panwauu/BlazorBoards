@@ -16,13 +16,13 @@ namespace MAUI
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5070/") });
-            builder.Services.AddBlazoredLocalStorage();
-
+            builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5070/") });
+            builder.Services.AddBlazoredLocalStorageAsSingleton();
+            builder.Services.AddSingleton<Common.Models.AppData>();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
-		builder.Logging.AddDebug();
+		    builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

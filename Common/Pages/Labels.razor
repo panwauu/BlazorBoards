@@ -1,6 +1,7 @@
 ﻿@page "/labels"
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject Common.Models.AppData appData
 @using System.Collections.ObjectModel
 @using System.Collections.Specialized
 @using System.ComponentModel
@@ -10,54 +11,28 @@
 <h3>Labels</h3>
 
 <div class="labels">
-    @foreach (var index in LabelItems.Select((e, i) => i))
+    @foreach (var index in appData.LabelItems.Select((e, i) => i))
     {
-        <input type="text" class="label-element label-text editable-input" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @bind-value="LabelItems[index].Title" />
-        <input type="color" class="label-element label-background editable-input" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Background" />
-        <input type="color" class="label-element label-color editable-input" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Color" />
-        <button class="btn label-element label-delete" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @onclick="() => DeleteLabel(index)">x</button>
+        <input type="text" class="label-element label-text editable-input" style="background: @appData.LabelItems[index].Background; color: @appData.LabelItems[index].Color" @bind-value="appData.LabelItems[index].Title" />
+        <input type="color" class="label-element label-background editable-input" style="background: @appData.LabelItems[index].Background" @bind-value="appData.LabelItems[index].Background" />
+        <input type="color" class="label-element label-color editable-input" style="background: @appData.LabelItems[index].Background" @bind-value="appData.LabelItems[index].Color" />
+        <button class="btn label-element label-delete" style="background: @appData.LabelItems[index].Background; color: @appData.LabelItems[index].Color" @onclick="() => DeleteLabel(index)">x</button>
     }
 </div>
 
 <button class="btn btn-primary" @onclick="AddLabel">+</button>
 
 @code {
-    private ObservableCollection<Label> LabelItems { get; set; } = new();
-
-    protected override async void OnInitialized()
-    {
-        var labels = await Http.GetFromJsonAsync<List<Label>>("api/labels");
-        if (labels != null)
-        {
-            LabelItems = new ObservableCollection<Label>(labels);
-            foreach (Label item in LabelItems)
-            {
-                item.PropertyChanged += UpdateServer;
-            }
-            StateHasChanged();
-        }
-        LabelItems.CollectionChanged += UpdateServer;
-
-        LocalStorage.SetItemAsStringAsync("test", "test");
-    }
-
     private void AddLabel()
     {
         var random = new Random();
         Label newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
-        newLabel.PropertyChanged += UpdateServer;
-        LabelItems.Add(newLabel);
+        newLabel.PropertyChanged += appData.ChangedHandler;
+        appData.LabelItems.Add(newLabel);
     }
 
     private void DeleteLabel(int index)
     {
-        LabelItems.RemoveAt(index);
-    }
-
-    private async void UpdateServer(object? sender, EventArgs e)
-    {
-        // Data is changed
-        //await LocalStorage.SetItem();
-        await Http.PutAsJsonAsync("api/labels", LabelItems);
+        appData.LabelItems.RemoveAt(index);
     }
 }
