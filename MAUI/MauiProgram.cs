@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Logging;
 
 namespace MAUI
 {
@@ -16,6 +17,7 @@ namespace MAUI
 
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5070/") });
+            builder.Services.AddBlazoredLocalStorage();
 
 
 #if DEBUG

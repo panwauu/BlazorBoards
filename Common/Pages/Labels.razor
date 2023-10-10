@@ -1,5 +1,6 @@
 ﻿@page "/labels"
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @using System.Collections.ObjectModel
 @using System.Collections.Specialized
 @using System.ComponentModel
@@ -36,6 +37,8 @@
             StateHasChanged();
         }
         LabelItems.CollectionChanged += UpdateServer;
+
+        LocalStorage.SetItemAsStringAsync("test", "test");
     }
 
     private void AddLabel()
@@ -53,6 +56,8 @@
 
     private async void UpdateServer(object? sender, EventArgs e)
     {
+        // Data is changed
+        //await LocalStorage.SetItem();
         await Http.PutAsJsonAsync("api/labels", LabelItems);
     }
 }
