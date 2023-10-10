@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.ResponseCompression;
+using Common.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
