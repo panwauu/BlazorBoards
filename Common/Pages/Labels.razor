@@ -1,37 +1,64 @@
 ﻿@page "/labels"
 @inject HttpClient Http
+@using System.Collections.ObjectModel
+@using System.Collections.Specialized
+@using System.ComponentModel
 
 <PageTitle>Labels</PageTitle>
 
 <h3>Labels</h3>
 
 <div class="labels">
-    @foreach (var index in _Labels.Select((e, i) => i))
+    @foreach (var index in LabelItems.Select((e, i) => i))
     {
-        <input type="text" class="label-text editable-input" style="background: @_Labels[index].Background; color: @_Labels[index].Color" @bind-value="_Labels[index].Title" />
-        <input class="label-background editable-input" type="color" style="background: @_Labels[index].Background" @bind-value="_Labels[index].Background" />
-        <input class="label-color editable-input" type="color" style="background: @_Labels[index].Background" @bind-value="_Labels[index].Color" />
+        <input type="text" class="label-text editable-input" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @bind-value="LabelItems[index].Title" />
+        <input class="label-background editable-input" type="color" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Background" />
+        <input class="label-color editable-input" type="color" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Color" />
+        <button class="btn btn-primary" @onclick="() => DeleteLabel(index)">x</button>
     }
 </div>
 
 <button class="btn btn-primary" @onclick="AddLabel">+</button>
 
 @code {
-    private List<Label> _Labels { get; set; } = new();
+    private ObservableCollection<Label> LabelItems { get; set; } = new();
 
     protected override async void OnInitialized()
     {
-        _Labels = new List<Label>();
-        _Labels.Add(new Label("prio1", "#000000", "#0000FF"));
-        _Labels.Add(new Label("prio2", "#000000", "#00FF00"));
-
         var labels = await Http.GetFromJsonAsync<List<Label>>("api/labels");
-        Console.WriteLine(labels?.ElementAt(0)?.Title);
+        if (labels != null)
+        {
+            LabelItems = new ObservableCollection<Label>(labels);
+            foreach (var item in LabelItems)
+            {
+                item.PropertyChanged += UpdateServer;
+            }
+            StateHasChanged();
+        }
+        LabelItems.CollectionChanged += UpdateServer;
     }
 
-    private void AddLabel()
+    private async void AddLabel()
     {
         var random = new Random();
-        _Labels.Add(new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}"));
+        var newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
+        newLabel.PropertyChanged += UpdateServer;
+        LabelItems.Add(newLabel);
+    }
+
+    private async void DeleteLabel(int index)
+    {
+        LabelItems.RemoveAt(index);
+        //await Http.PutAsJsonAsync("api/labels", LabelItems);
+    }
+
+    private async void UpdateServer(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        await Http.PutAsJsonAsync("api/labels", LabelItems);
+    }
+
+    private async void UpdateServer(object sender, PropertyChangedEventArgs e)
+    {
+        await Http.PutAsJsonAsync("api/labels", LabelItems);
     }
 }

@@ -1,4 +1,6 @@
-﻿public class ChecklistItem
+﻿using System.ComponentModel;
+
+public class ChecklistItem
 {
     public bool IsDone { get; set; }
     public string Title { get; set; }
@@ -55,17 +57,29 @@ public class Board
     }
 }
 
-public class Label
+public class Label : INotifyPropertyChanged
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string Title { get; set; }
-    public string Color { get; set; }
-    public string Background { get; set; }
+    public readonly string Id = Guid.NewGuid().ToString();
+    private string _Title;
+    private string _Color;
+    private string _Background;
+
+    public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
+    public string Color { get { return _Color; } set { if (_Color != value) { _Color = value; OnPropertyChanged(nameof(Color)); } } }
+    public string Background { get { return _Background; } set { if (_Background != value) { _Background = value; OnPropertyChanged(nameof(Background)); } } }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
 
     public Label(string title, string color, string background)
     {
-        Title = title;
-        Color = color;
-        Background = background;
+        _Title = title;
+        _Color = color;
+        _Background = background;
     }
 }

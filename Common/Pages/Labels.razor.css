@@ -1,6 +1,6 @@
 ﻿.labels {
     display: grid;
-    grid-template-columns: 200px 30px 30px;
+    grid-template-columns: 200px 30px 30px 3px;
     grid-row-gap: 5px;
     --label-border-radius: 7px;
 }
