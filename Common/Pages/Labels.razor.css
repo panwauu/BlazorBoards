@@ -1,30 +1,35 @@
 ﻿.labels {
     display: grid;
-    grid-template-columns: 200px 30px 30px 3px;
+    grid-template-columns: 200px 30px 30px 30px;
     grid-row-gap: 5px;
     --label-border-radius: 7px;
+}
+
+.label-element {
+    border-radius: 0;
+    padding: 5px;
+    width: 100%;
+    height: 100%;
 }
 
 .label-text {
     grid-column: 1;
     border-radius: var(--label-border-radius) 0 0 var(--label-border-radius);
-    padding: 5px;
 }
 
 .label-background {
     grid-column: 2;
-    border-radius: 0;
-    padding: 5px;
     border: 0;
-    width: 100%;
-    height: 100%;
+    cursor: pointer;
 }
 
 .label-color {
     grid-column: 3;
-    border-radius: 0 var(--label-border-radius) var(--label-border-radius) 0;
-    padding: 5px;
     border: 0;
-    width: 100%;
-    height: 100%;
+    cursor: pointer;
+}
+
+.label-delete {
+    grid-column: 4;
+    border-radius: 0 var(--label-border-radius) var(--label-border-radius) 0;
 }

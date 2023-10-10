@@ -68,7 +68,7 @@ public class Label : INotifyPropertyChanged
     public string Color { get { return _Color; } set { if (_Color != value) { _Color = value; OnPropertyChanged(nameof(Color)); } } }
     public string Background { get { return _Background; } set { if (_Background != value) { _Background = value; OnPropertyChanged(nameof(Background)); } } }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)
     {
@@ -81,5 +81,6 @@ public class Label : INotifyPropertyChanged
         _Title = title;
         _Color = color;
         _Background = background;
+        PropertyChanged = null;
     }
 }

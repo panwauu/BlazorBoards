@@ -11,10 +11,10 @@
 <div class="labels">
     @foreach (var index in LabelItems.Select((e, i) => i))
     {
-        <input type="text" class="label-text editable-input" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @bind-value="LabelItems[index].Title" />
-        <input class="label-background editable-input" type="color" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Background" />
-        <input class="label-color editable-input" type="color" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Color" />
-        <button class="btn btn-primary" @onclick="() => DeleteLabel(index)">x</button>
+        <input type="text" class="label-element label-text editable-input" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @bind-value="LabelItems[index].Title" />
+        <input type="color" class="label-element label-background editable-input" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Background" />
+        <input type="color" class="label-element label-color editable-input" style="background: @LabelItems[index].Background" @bind-value="LabelItems[index].Color" />
+        <button class="btn label-element label-delete" style="background: @LabelItems[index].Background; color: @LabelItems[index].Color" @onclick="() => DeleteLabel(index)">x</button>
     }
 </div>
 
@@ -29,7 +29,7 @@
         if (labels != null)
         {
             LabelItems = new ObservableCollection<Label>(labels);
-            foreach (var item in LabelItems)
+            foreach (Label item in LabelItems)
             {
                 item.PropertyChanged += UpdateServer;
             }
@@ -38,26 +38,20 @@
         LabelItems.CollectionChanged += UpdateServer;
     }
 
-    private async void AddLabel()
+    private void AddLabel()
     {
         var random = new Random();
-        var newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
+        Label newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
         newLabel.PropertyChanged += UpdateServer;
         LabelItems.Add(newLabel);
     }
 
-    private async void DeleteLabel(int index)
+    private void DeleteLabel(int index)
     {
         LabelItems.RemoveAt(index);
-        //await Http.PutAsJsonAsync("api/labels", LabelItems);
     }
 
-    private async void UpdateServer(object sender, NotifyCollectionChangedEventArgs e)
-    {
-        await Http.PutAsJsonAsync("api/labels", LabelItems);
-    }
-
-    private async void UpdateServer(object sender, PropertyChangedEventArgs e)
+    private async void UpdateServer(object? sender, EventArgs e)
     {
         await Http.PutAsJsonAsync("api/labels", LabelItems);
     }
