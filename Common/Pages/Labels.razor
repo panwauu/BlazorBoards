@@ -1,10 +1,5 @@
 ﻿@page "/labels"
-@inject HttpClient Http
-@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject AppData appData
-@using System.Collections.ObjectModel
-@using System.Collections.Specialized
-@using System.ComponentModel
 
 <PageTitle>Labels</PageTitle>
 
@@ -13,21 +8,24 @@
 <div class="labels">
     @foreach (var index in appData.blazorBoardData.Labels.Select((e, i) => i))
     {
-        <input type="text" class="label-element label-text editable-input" style="background: @appData.blazorBoardData.Labels[index].Background; color: @appData.blazorBoardData.Labels[index].Color" @bind-value="appData.blazorBoardData.Labels[index].Title" />
-        <input type="color" class="label-element label-background editable-input" style="background: @appData.blazorBoardData.Labels[index].Background" @bind-value="appData.blazorBoardData.Labels[index].Background" />
-        <input type="color" class="label-element label-color editable-input" style="background: @appData.blazorBoardData.Labels[index].Background" @bind-value="appData.blazorBoardData.Labels[index].Color" />
-        <button class="btn label-element label-delete" style="background: @appData.blazorBoardData.Labels[index].Background; color: @appData.blazorBoardData.Labels[index].Color" @onclick="() => DeleteLabel(index)">x</button>
+        <div class="label" style="color: @appData.blazorBoardData.Labels[index].Color; background: @appData.blazorBoardData.Labels[index].Background;">
+            <input type="text" class="label-element label-text editable-input" @bind-value="appData.blazorBoardData.Labels[index].Title" />
+            <input type="color" class="label-element label-background editable-input" @bind-value="appData.blazorBoardData.Labels[index].Background" />
+            <input type="color" class="label-element label-color editable-input" @bind-value="appData.blazorBoardData.Labels[index].Color" />
+            <div class="label-element label-delete">
+                <Icon Name="IconName.Delete" @onclick="() => DeleteLabel(index)" />
+            </div>
+        </div>
     }
 </div>
 
-<button class="btn btn-primary" @onclick="AddLabel">+</button>
+<Button Color="Color.Primary" @onclick="AddLabel" Outline><Icon Name="IconName.Add" /></Button>
 
 @code {
     private void AddLabel()
     {
         var random = new Random();
-        Label newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
-        newLabel.PropertyChanged += appData.ChangedHandler;
+        var newLabel = new Common.Models.Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
         appData.blazorBoardData.Labels.Add(newLabel);
     }
 

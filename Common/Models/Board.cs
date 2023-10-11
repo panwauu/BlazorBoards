@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace Common.Models
 {
@@ -8,13 +7,13 @@ namespace Common.Models
         public readonly string Id = Guid.NewGuid().ToString();
 
         private string _Title;
-        private ObservableCollection<TaskItem> _Tasks;
+        private ObservableList<TaskItem> _Tasks;
 
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
-        public ObservableCollection<TaskItem> Tasks
+        public ObservableList<TaskItem> Tasks
         {
             get { return _Tasks; }
-            set { if (_Tasks != value) { _Tasks = value; _Tasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tasks)); OnPropertyChanged(nameof(Tasks)); } }
+            set { if (_Tasks != value) { _Tasks = value; _Tasks.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks)); OnPropertyChanged(nameof(Tasks)); } }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -33,8 +32,8 @@ namespace Common.Models
         public Board(string title)
         {
             _Title = title;
-            _Tasks = new ObservableCollection<TaskItem>();
-            _Tasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
+            _Tasks = new ObservableList<TaskItem>();
+            _Tasks.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
         }
     }
 }

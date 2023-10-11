@@ -23,7 +23,7 @@
         @ondragenter="@( () => globalDragEnter.InvokeAsync(BoardData.Tasks.Count) )"
         @ondragleave="@( () => globalDragLeave.InvokeAsync() )"
         @ondrop="@( () => globalDragDrop.InvokeAsync((BoardData.Id, BoardData.Tasks.Count)) )">
-            <button class="btn btn-outline-primary" @onclick="AddTask">+</button>
+            <Button Color="Color.Primary" @onclick="AddTask" Outline><Icon Name="IconName.Add" /></Button>
         </div>
     </div>
 </div>

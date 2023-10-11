@@ -11,7 +11,7 @@ namespace Common.Models
         private string? _Description;
         private DateTime? _Deadline;
         private ObservableCollection<string> _Labels;
-        private ObservableCollection<ChecklistItem> _Checklist;
+        private ObservableList<ChecklistItem> _Checklist;
 
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
         public string? Description { get { return _Description; } set { if (_Description != value) { _Description = value; OnPropertyChanged(nameof(Description)); } } }
@@ -21,10 +21,10 @@ namespace Common.Models
             get { return _Labels; }
             set { if (_Labels != value) { _Labels = value; _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels)); OnPropertyChanged(nameof(Labels)); } }
         }
-        public ObservableCollection<ChecklistItem> Checklist
+        public ObservableList<ChecklistItem> Checklist
         {
             get { return _Checklist; }
-            set { if (_Checklist != value) { _Checklist = value; _Checklist.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Checklist)); OnPropertyChanged(nameof(Checklist)); } }
+            set { if (_Checklist != value) { _Checklist = value; _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist)); OnPropertyChanged(nameof(Checklist)); } }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -39,8 +39,8 @@ namespace Common.Models
             _Title = title;
             _Labels = new ObservableCollection<string>();
             _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
-            _Checklist = new ObservableCollection<ChecklistItem>();
-            _Checklist.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
+            _Checklist = new ObservableList<ChecklistItem>();
+            _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
         }
     }
 }

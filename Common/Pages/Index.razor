@@ -14,8 +14,15 @@
                    globalDragEnter="@( i => dragHelper.dragEnter(appData.blazorBoardData.Boards[index], i) )"
                    globalDragLeave="@( () => dragHelper.dragLeave() )" />
     }
+    <Button class="add-board-button" Color="Color.Secondary" Outline><Icon Name="IconName.Add" @onclick="AddBoard" /> Add new board</Button>
 </div>
 
 @code {
     private DragHelper dragHelper = new();
+
+    private void AddBoard()
+    {
+        appData.blazorBoardData.Boards.Add(new Board("Board"));
+        StateHasChanged();
+    }
 }
