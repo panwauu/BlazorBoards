@@ -1,39 +1,21 @@
 ﻿@page "/"
+@inject AppData appData
 
 <PageTitle>Boards</PageTitle>
 
 <div class="boards">
-    @foreach (var index in _Boards.Select((e, i) => i))
+    @foreach (var index in appData.blazorBoardData.Boards.Select((e, i) => i))
     {
-        <TaskBoard @bind-BoardData="_Boards[index]"
-            dragHelper="@dragHelper"
-            globalDragStart="@( task => dragHelper.dragStart(_Boards[index], task) )" 
-            globalDragDrop="@( e => dragHelper.drop(_Boards[index], e.insertAtBoardPosition))" 
-            globalDragEnd="@( e => dragHelper.dragEnd() )"
-            globalDragEnter="@( i => dragHelper.dragEnter(_Boards[index], i) )"
-            globalDragLeave="@( () => dragHelper.dragLeave() )" />
+        <TaskBoard @bind-BoardData="appData.blazorBoardData.Boards[index]"
+                   dragHelper="@dragHelper"
+                   globalDragStart="@( task => dragHelper.dragStart(appData.blazorBoardData.Boards[index], task) )"
+                   globalDragDrop="@( e => dragHelper.drop(appData.blazorBoardData.Boards[index], e.insertAtBoardPosition))"
+                   globalDragEnd="@( e => dragHelper.dragEnd() )"
+                   globalDragEnter="@( i => dragHelper.dragEnter(appData.blazorBoardData.Boards[index], i) )"
+                   globalDragLeave="@( () => dragHelper.dragLeave() )" />
     }
 </div>
 
 @code {
-    private List<Board> _Boards { get; set; } = new();
-
-    protected override void OnInitialized()
-    {
-        _Boards = new List<Board>();
-        _Boards.Add(new Board("In progress") { });
-        _Boards.Add(new Board("Backlog") { });
-        _Boards.Add(new Board("Done") { });
-        _Boards[0].Tasks.Add(new TaskItem("Task 1") { });
-        _Boards[0].Tasks.Add(new TaskItem("Task 2") { });
-        _Boards[1].Tasks.Add(new TaskItem("Task 1") { });
-        _Boards[1].Tasks.Add(new TaskItem("Task 2") { });
-
-        _Boards[0].Tasks[0].Labels.Add(new Label("prio1", "black", "red"));
-        _Boards[0].Tasks[0].Labels.Add(new Label("prio2", "white", "blue"));
-        _Boards[0].Tasks[0].Checklist.Add(new ChecklistItem("Checklist 1"));
-        _Boards[0].Tasks[0].Deadline = DateTime.Now;
-    }
-
     private DragHelper dragHelper = new();
 }

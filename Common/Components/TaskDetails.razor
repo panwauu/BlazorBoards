@@ -7,10 +7,10 @@
             <div class="modal-body body">
                 <h5>Labels</h5>
                 <div class="task-labels">
-                @foreach (var label in TaskData.Labels)
+                <!-- todo @foreach (var label in TaskData.Labels)
                 {
                     <div class="task-label" style="background:@label.Background;color:@label.Color">@label.Title</div>
-                }
+                }-->
                 </div>
                 <h5 style="margin-top: 10px;">Description</h5>
                 <InputTextArea @bind-Value="@TaskData.Description" placeholder="Description" style="width: 100%;"></InputTextArea>

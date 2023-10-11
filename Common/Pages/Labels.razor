@@ -1,7 +1,7 @@
 ﻿@page "/labels"
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
-@inject Common.Models.AppData appData
+@inject AppData appData
 @using System.Collections.ObjectModel
 @using System.Collections.Specialized
 @using System.ComponentModel
@@ -11,12 +11,12 @@
 <h3>Labels</h3>
 
 <div class="labels">
-    @foreach (var index in appData.LabelItems.Select((e, i) => i))
+    @foreach (var index in appData.blazorBoardData.Labels.Select((e, i) => i))
     {
-        <input type="text" class="label-element label-text editable-input" style="background: @appData.LabelItems[index].Background; color: @appData.LabelItems[index].Color" @bind-value="appData.LabelItems[index].Title" />
-        <input type="color" class="label-element label-background editable-input" style="background: @appData.LabelItems[index].Background" @bind-value="appData.LabelItems[index].Background" />
-        <input type="color" class="label-element label-color editable-input" style="background: @appData.LabelItems[index].Background" @bind-value="appData.LabelItems[index].Color" />
-        <button class="btn label-element label-delete" style="background: @appData.LabelItems[index].Background; color: @appData.LabelItems[index].Color" @onclick="() => DeleteLabel(index)">x</button>
+        <input type="text" class="label-element label-text editable-input" style="background: @appData.blazorBoardData.Labels[index].Background; color: @appData.blazorBoardData.Labels[index].Color" @bind-value="appData.blazorBoardData.Labels[index].Title" />
+        <input type="color" class="label-element label-background editable-input" style="background: @appData.blazorBoardData.Labels[index].Background" @bind-value="appData.blazorBoardData.Labels[index].Background" />
+        <input type="color" class="label-element label-color editable-input" style="background: @appData.blazorBoardData.Labels[index].Background" @bind-value="appData.blazorBoardData.Labels[index].Color" />
+        <button class="btn label-element label-delete" style="background: @appData.blazorBoardData.Labels[index].Background; color: @appData.blazorBoardData.Labels[index].Color" @onclick="() => DeleteLabel(index)">x</button>
     }
 </div>
 
@@ -28,11 +28,11 @@
         var random = new Random();
         Label newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
         newLabel.PropertyChanged += appData.ChangedHandler;
-        appData.LabelItems.Add(newLabel);
+        appData.blazorBoardData.AddLabel(newLabel);
     }
 
     private void DeleteLabel(int index)
     {
-        appData.LabelItems.RemoveAt(index);
+        appData.blazorBoardData.Labels.RemoveAt(index);
     }
 }

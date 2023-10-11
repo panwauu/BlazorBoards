@@ -26,7 +26,6 @@ namespace Common.Models
             _Title = title;
             _Color = color;
             _Background = background;
-            PropertyChanged = null;
         }
     }
 }

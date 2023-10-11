@@ -1,14 +1,26 @@
-﻿namespace Common.Models
+﻿using System.ComponentModel;
+
+namespace Common.Models
 {
-    public class ChecklistItem
+    public class ChecklistItem : INotifyPropertyChanged
     {
-        public bool IsDone { get; set; }
-        public string Title { get; set; }
+        private bool _IsDone;
+        private string _Title;
+
+        public bool IsDone { get { return _IsDone; } set { if (_IsDone != value) { _IsDone = value; OnPropertyChanged(nameof(IsDone)); } } }
+        public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public ChecklistItem(string title)
         {
-            Title = title;
-            IsDone = false;
+            _Title = title;
+            _IsDone = false;
         }
 
         public override bool Equals(object? obj)

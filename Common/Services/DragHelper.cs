@@ -1,4 +1,6 @@
-﻿namespace Common.Models
+﻿using Common.Models;
+
+namespace Common.Services
 {
     public class DragHelper
     {
@@ -26,7 +28,7 @@
         {
             if (DraggedTask == null || DraggedTaskBoard == null) return;
 
-            int positionToRemoveFrom = DraggedTaskBoard.Tasks.FindIndex(t => t.Id == DraggedTask.Id);
+            int positionToRemoveFrom = DraggedTaskBoard.Tasks.ToList().FindIndex(t => t.Id == DraggedTask.Id);
             if (positionToRemoveFrom == -1)
             {
                 DraggedTask = null;

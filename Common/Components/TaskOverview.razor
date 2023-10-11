@@ -1,13 +1,15 @@
-﻿<div class="card" @onclick="() => Modal.Open()">
+﻿@inject AppData appData
+
+<div class="card" @onclick="() => Modal.Open()">
     <div class="task-header">
         @foreach(var label in TaskData.Labels)
         {
-            <div class="task-label" style="background:@label.Background;color:@label.Color">@label.Title</div>
+            <div class="task-label" style="background:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Background;color:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Color">@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Title</div>
         }
     </div>
     <div>@TaskData.Title</div>
     <div class="task-bottom">
-        <div class="task-checklist" hidden="@(TaskData.Checklist.Count == 0)">@TaskData.Checklist.FindAll(e => e.IsDone).Count/@TaskData.Checklist.Count</div>
+        <div class="task-checklist" hidden="@(TaskData.Checklist.Count == 0)">@TaskData.Checklist.ToList().FindAll(e => e.IsDone).Count/@TaskData.Checklist.Count</div>
         <div class="task-deadline @ClassForTaskDeadline()" hidden="@(TaskData.Deadline == null)">@TaskData.Deadline?.ToString("d.M.y")</div>
     </div>
 </div>

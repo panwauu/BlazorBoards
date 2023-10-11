@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Common.Services;
 using Microsoft.Extensions.Logging;
 
 namespace MAUI
@@ -18,7 +19,7 @@ namespace MAUI
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5070/") });
             builder.Services.AddBlazoredLocalStorageAsSingleton();
-            builder.Services.AddSingleton<Common.Models.AppData>();
+            builder.Services.AddSingleton<AppData>();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
