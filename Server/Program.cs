@@ -36,32 +36,31 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
-var labels = new List<Label>() { new Label("prio1", "#000000", "#AA2200") };
 
-app.MapGet("/api/labels", () =>
+var data = new BlazorBoardData();
+data.Labels.Add(new Label("Label 1", "#000000", "#AAAA00") { });
+data.Boards.Add(new Board("In progress") { });
+data.Boards.Add(new Board("Backlog") { });
+data.Boards.Add(new Board("Done") { });
+data.Boards[0].AddTask(new TaskItem("Task 1") { });
+data.Boards[0].AddTask(new TaskItem("Task 2") { });
+data.Boards[1].AddTask(new TaskItem("Task 1") { });
+data.Boards[1].AddTask(new TaskItem("Task 2") { });
+data.Boards[0].Tasks[0].Labels.Add("Label 1");
+
+app.MapGet("/api/data", () =>
 {
-    return TypedResults.Ok(labels);
+    return TypedResults.Ok(data);
 })
-.WithName("GetLabels")
+.WithName("GetData")
 .WithOpenApi();
 
-app.MapPut("/api/labels", (List<Label> recievedLabels) =>
+app.MapPut("/api/data", (BlazorBoardData recievedData) =>
 {
-    labels = recievedLabels;
+    data = recievedData;
     return TypedResults.Ok();
 })
-.WithName("PostLabels")
-.WithOpenApi();
-
-app.MapDelete("/api/labels/{id}", Results<Ok, NotFound> (string id) =>
-{
-    var labelToRemove = labels.Find(l => l.Id == id);
-    if (labelToRemove == null) { return TypedResults.NotFound(); }
-
-    labels.Remove(labelToRemove);
-    return TypedResults.Ok();
-})
-.WithName("RemoveLabels")
+.WithName("PostData")
 .WithOpenApi();
 
 app.Run();

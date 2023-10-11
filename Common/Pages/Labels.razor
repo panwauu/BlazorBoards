@@ -28,7 +28,7 @@
         var random = new Random();
         Label newLabel = new Label("Label", "#000000", $"#{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}{random.Next(0, 256).ToString("X2")}");
         newLabel.PropertyChanged += appData.ChangedHandler;
-        appData.blazorBoardData.AddLabel(newLabel);
+        appData.blazorBoardData.Labels.Add(newLabel);
     }
 
     private void DeleteLabel(int index)

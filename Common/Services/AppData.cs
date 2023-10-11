@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using System.Net.Http.Json;
 using Common.Models;
+using System.Text.Json;
 
 namespace Common.Services
 {
@@ -33,28 +34,24 @@ namespace Common.Services
 
         public async Task Initialize()
         {
-            /*try
+            Console.WriteLine("Initializing...");
+            try
             {
-                var labelsFromServer = await _httpClient.GetFromJsonAsync<List<Label>>("api/labels");
+                var dataFromServer = await _httpClient.GetFromJsonAsync<BlazorBoardData>("api/data");
                 await _localStorage.RemoveItemAsync("OfflineChanges");
-                if (labelsFromServer is null) return;
-                foreach (var label in labelsFromServer)
-                {
-                    LabelItems.Add(label);
-                    label.PropertyChanged += ChangedHandler;
-                }
+                if (dataFromServer is null) return;
+                blazorBoardData.OverrideHandlers(dataFromServer);
+                Console.WriteLine(JsonSerializer.Serialize(blazorBoardData));
             }
             catch (Exception ex)
             {
                 await _localStorage.SetItemAsync("OfflineChanges", DateTime.Now);
-                var labelsFromStorage = await _localStorage.GetItemAsync<ObservableCollection<Label>>("LabelItems");
-                if (labelsFromStorage is null) return;
-                foreach (var label in labelsFromStorage)
-                {
-                    LabelItems.Add(label);
-                    label.PropertyChanged += ChangedHandler;
-                }
-            }*/
+                var dataFromStorage = await _localStorage.GetItemAsync<BlazorBoardData>("blazorBoardData");
+                if (dataFromStorage is null) return;
+                blazorBoardData.OverrideHandlers(dataFromStorage);
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(JsonSerializer.Serialize(blazorBoardData));
+            }
         }
 
         public AppData(HttpClient httpClient, ILocalStorageService localStorage)

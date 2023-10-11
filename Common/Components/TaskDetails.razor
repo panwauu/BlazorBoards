@@ -1,4 +1,6 @@
-﻿<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
+﻿@inject AppData appData
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" style="display:@ModalDisplay">
     <div class="modal-dialog" role="document" style="z-index: 1055;">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,10 +9,10 @@
             <div class="modal-body body">
                 <h5>Labels</h5>
                 <div class="task-labels">
-                <!-- todo @foreach (var label in TaskData.Labels)
+                @foreach (var label in TaskData.Labels)
                 {
-                    <div class="task-label" style="background:@label.Background;color:@label.Color">@label.Title</div>
-                }-->
+                        <div class="task-label" style="background:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Background;color:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Color">@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Title</div>
+                }
                 </div>
                 <h5 style="margin-top: 10px;">Description</h5>
                 <InputTextArea @bind-Value="@TaskData.Description" placeholder="Description" style="width: 100%;"></InputTextArea>

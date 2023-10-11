@@ -4,6 +4,8 @@ namespace Common.Models
 {
     public class ChecklistItem : INotifyPropertyChanged
     {
+        public readonly string Id = Guid.NewGuid().ToString();
+
         private bool _IsDone;
         private string _Title;
 

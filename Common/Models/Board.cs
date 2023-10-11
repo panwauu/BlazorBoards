@@ -5,11 +5,11 @@ namespace Common.Models
 {
     public class Board : INotifyPropertyChanged
     {
-        private string _Id;
+        public readonly string Id = Guid.NewGuid().ToString();
+
         private string _Title;
         private ObservableCollection<TaskItem> _Tasks;
 
-        public string Id { get { return _Id; } set { if (_Id != value) { _Id = value; OnPropertyChanged(nameof(Id)); } } }
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
         public ObservableCollection<TaskItem> Tasks { 
             get { return _Tasks; } 
@@ -31,7 +31,6 @@ namespace Common.Models
 
         public Board(string title)
         {
-            _Id = Guid.NewGuid().ToString();
             _Title = title;
             _Tasks = new ObservableCollection<TaskItem>();
             _Tasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
