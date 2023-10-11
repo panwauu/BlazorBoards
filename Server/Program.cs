@@ -41,10 +41,10 @@ data.Labels.Add(new Label("Label 1", "#000000", "#AAAA00") { });
 data.Boards.Add(new Board("In progress") { });
 data.Boards.Add(new Board("Backlog") { });
 data.Boards.Add(new Board("Done") { });
-data.Boards[0].AddTask(new TaskItem("Task 1") { });
-data.Boards[0].AddTask(new TaskItem("Task 2") { });
-data.Boards[1].AddTask(new TaskItem("Task 1") { });
-data.Boards[1].AddTask(new TaskItem("Task 2") { });
+data.Boards[0].Tasks.Add(new TaskItem("Task 1") { });
+data.Boards[0].Tasks.Add(new TaskItem("Task 2") { });
+data.Boards[1].Tasks.Add(new TaskItem("Task 1") { });
+data.Boards[1].Tasks.Add(new TaskItem("Task 2") { });
 data.Boards[0].Tasks[0].Labels.Add("Label 1");
 
 app.MapGet("/api/data", () =>

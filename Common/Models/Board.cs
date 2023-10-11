@@ -23,12 +23,6 @@ namespace Common.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void AddTask(TaskItem task)
-        {
-            Tasks.Add(task);
-            task.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
-        }
-
         public Board(string title)
         {
             _Title = title;
