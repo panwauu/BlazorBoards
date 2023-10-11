@@ -8,7 +8,7 @@
 <div class="labels">
     @foreach (var index in appData.blazorBoardData.Labels.Select((e, i) => i))
     {
-        <div class="label" style="color: @appData.blazorBoardData.Labels[index].Color; background: @appData.blazorBoardData.Labels[index].Background;">
+        <div class="label" style="color: @appData.blazorBoardData.Labels[index].Color; background: @appData.blazorBoardData.Labels[index].Background;" @key="appData.blazorBoardData.Labels[index].Id">
             <input type="text" class="label-element label-text editable-input" @bind-value="appData.blazorBoardData.Labels[index].Title" />
             <input type="color" class="label-element label-background editable-input" @bind-value="appData.blazorBoardData.Labels[index].Background" />
             <input type="color" class="label-element label-color editable-input" @bind-value="appData.blazorBoardData.Labels[index].Color" />

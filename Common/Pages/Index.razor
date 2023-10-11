@@ -6,15 +6,18 @@
 <div class="boards">
     @foreach (var index in appData.blazorBoardData.Boards.Select((e, i) => i))
     {
-        <TaskBoard @bind-BoardData="appData.blazorBoardData.Boards[index]"
-                   dragHelper="@dragHelper"
-                   globalDragStart="@( task => dragHelper.dragStart(appData.blazorBoardData.Boards[index], task) )"
-                   globalDragDrop="@( e => dragHelper.drop(appData.blazorBoardData.Boards[index], e.insertAtBoardPosition))"
-                   globalDragEnd="@( e => dragHelper.dragEnd() )"
-                   globalDragEnter="@( i => dragHelper.dragEnter(appData.blazorBoardData.Boards[index], i) )"
-                   globalDragLeave="@( () => dragHelper.dragLeave() )" />
+        <div @key="appData.blazorBoardData.Boards[index].Id">
+            <TaskBoard BoardIndex="index"
+                       deleteBoard="@(() => DeleteBoard(index))"
+                       dragHelper="@dragHelper"
+                       globalDragStart="@( task => dragHelper.dragStart(appData.blazorBoardData.Boards[index], task) )"
+                       globalDragDrop="@( e => dragHelper.drop(appData.blazorBoardData.Boards[index], e.insertAtBoardPosition))"
+                       globalDragEnd="@( e => dragHelper.dragEnd() )"
+                       globalDragEnter="@( i => dragHelper.dragEnter(appData.blazorBoardData.Boards[index], i) )"
+                       globalDragLeave="@( () => dragHelper.dragLeave() )" />
+        </div>
     }
-    <Button class="add-board-button" Color="Color.Secondary" Outline><Icon Name="IconName.Add" @onclick="AddBoard" /> Add new board</Button>
+    <Button class="add-boards-button" Color="Color.Secondary" @onclick="AddBoard" Outline><Icon Name="IconName.Add" /> Add new board</Button>
 </div>
 
 @code {
@@ -23,6 +26,10 @@
     private void AddBoard()
     {
         appData.blazorBoardData.Boards.Add(new Board("Board"));
-        StateHasChanged();
+    }
+
+    private void DeleteBoard(int index)
+    {
+        appData.blazorBoardData.Boards.RemoveAt(index);
     }
 }

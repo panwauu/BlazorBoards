@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<TaskDetails @bind-TaskData="TaskData" @ref="Modal"></TaskDetails>
+<TaskDetails @bind-TaskData="TaskData" @ref="Modal" deleteTask="@(() => deleteTask.InvokeAsync())"></TaskDetails>
 
 @code {
     [Parameter]
@@ -22,6 +22,9 @@
 
     [Parameter]
     public EventCallback<TaskItem> TaskDataChanged { get; set; }
+
+    [Parameter]
+    public EventCallback deleteTask { get; set; }
 
     private TaskDetails Modal { get; set; } = default!;
 

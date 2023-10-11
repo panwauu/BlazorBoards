@@ -1,20 +1,25 @@
-﻿<div class="card board">
-    <h5>@BoardData.Title</h5>
-    <div>
-        @foreach (var index in BoardData.Tasks.Select((e, i) => i))
+﻿@inject AppData appData
+
+<div class="card board">
+    <div class="board-header">
+        <input @bind-value="BoardData.Title" class="editable-input" />
+        <Button Outline @onclick="DeleteBoard"><Icon Name="IconName.Delete" /></Button>
+     </div>
+     <div>
+         @foreach (var index in BoardData.Tasks.Select((e, i) => i))
         {
             <div hidden="@(BoardData.Id != dragHelper.InsertAtBoard?.Id || dragHelper.InsertAtBoardPosition != index)" style="width: 100%; height: 2px; background: red;"></div>
             <div draggable="true"
                  id="@BoardData.Tasks[index].Id"
+            @key="BoardData.Tasks[index].Id"
             @ondragover="@( () => globalDragEnter.InvokeAsync(index) )"
             @ondragover:preventDefault="true"
-            @key=@BoardData.Tasks[index].Id
             @ondragstart="@( () => globalDragStart.InvokeAsync(BoardData.Tasks[index]))"
             @ondragend="@( () => globalDragEnd.InvokeAsync() )"
             @ondragenter="@( () => globalDragEnter.InvokeAsync(index) )"
             @ondragleave="@( () => globalDragLeave.InvokeAsync() )"
             @ondrop="@( () => globalDragDrop.InvokeAsync((BoardData.Id, index)))">
-                <TaskOverview @bind-TaskData="BoardData.Tasks[index]" />
+                <TaskOverview @bind-TaskData="BoardData.Tasks[index]" deleteTask="@(() => DeleteTask(index))" />
             </div>
         }
         <div hidden="@(BoardData.Id != dragHelper.InsertAtBoard?.Id || dragHelper.InsertAtBoardPosition != BoardData.Tasks.Count)" style="width: 100%; height: 2px; background: red;"></div>
@@ -30,13 +35,12 @@
 
 @code {
     [Parameter]
-    public Board BoardData { get; set; } = default!;
-
-    [Parameter]
-    public EventCallback<Board> BoardDataChanged { get; set; }
+    public int BoardIndex { get; set; }
 
     [Parameter]
     public DragHelper dragHelper { get; set; } = default!;
+
+    public Board BoardData { get => appData.blazorBoardData.Boards[BoardIndex]; }
 
     [Parameter]
     public EventCallback<TaskItem> globalDragStart { get; set; }
@@ -49,8 +53,21 @@
     [Parameter]
     public EventCallback globalDragLeave { get; set; }
 
+    [Parameter]
+    public EventCallback deleteBoard { get; set; }
+
     private void AddTask()
     {
-        BoardData.Tasks.Add(new TaskItem("Task"));
+        appData.blazorBoardData.Boards[BoardIndex].Tasks.Add(new TaskItem("Task"));
+    }
+
+    private void DeleteTask(int index)
+    {
+        appData.blazorBoardData.Boards[BoardIndex].Tasks.RemoveAt(index);
+    }
+
+    private void DeleteBoard()
+    {
+        deleteBoard.InvokeAsync();
     }
 }

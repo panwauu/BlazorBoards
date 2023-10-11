@@ -4,6 +4,16 @@
     padding: 5px;
 }
 
+.board-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.board-header > input {
+    font-size: larger;
+}
+
 .add-task {
     width: 100%;
     display: flex;

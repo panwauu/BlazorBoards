@@ -26,6 +26,7 @@
                 <button class="btn btn-outline-primary" @onclick="addChecklist">+</button>
             </div>
             <div class="modal-footer">
+                <Button Outline @onclick="DeleteTask"><Icon Name="IconName.Delete" /></Button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => Close()">Close</button>
             </div>
         </div>
@@ -65,9 +66,18 @@
     [Parameter]
     public EventCallback<TaskItem> TaskDataChanged { get; set; }
 
+    [Parameter]
+    public EventCallback deleteTask { get; set; }
+
     private void addChecklist()
     {
         TaskData.Checklist.Add(new ChecklistItem("Checklist item"));
         TaskDataChanged.InvokeAsync(TaskData);
+    }
+
+    private void DeleteTask()
+    {
+        deleteTask.InvokeAsync();
+        Close();
     }
 }
