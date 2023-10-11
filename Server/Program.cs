@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Common.Models;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace Common.Models
 {
@@ -17,13 +16,15 @@ namespace Common.Models
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
         public string? Description { get { return _Description; } set { if (_Description != value) { _Description = value; OnPropertyChanged(nameof(Description)); } } }
         public DateTime? Deadline { get { return _Deadline; } set { if (_Deadline != value) { _Deadline = value; OnPropertyChanged(nameof(Deadline)); } } }
-        public ObservableCollection<string> Labels { 
-            get { return _Labels; } 
-            set { if (_Labels != value) { _Labels = value; _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels)); OnPropertyChanged(nameof(Labels)); } } 
+        public ObservableCollection<string> Labels
+        {
+            get { return _Labels; }
+            set { if (_Labels != value) { _Labels = value; _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels)); OnPropertyChanged(nameof(Labels)); } }
         }
-        public ObservableCollection<ChecklistItem> Checklist { 
-            get { return _Checklist; } 
-            set { if (_Checklist != value) { _Checklist = value; _Checklist.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Checklist)); OnPropertyChanged(nameof(Checklist)); } } 
+        public ObservableCollection<ChecklistItem> Checklist
+        {
+            get { return _Checklist; }
+            set { if (_Checklist != value) { _Checklist = value; _Checklist.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Checklist)); OnPropertyChanged(nameof(Checklist)); } }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

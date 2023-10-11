@@ -11,9 +11,10 @@ namespace Common.Models
         private ObservableCollection<TaskItem> _Tasks;
 
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
-        public ObservableCollection<TaskItem> Tasks { 
-            get { return _Tasks; } 
-            set { if (_Tasks != value) { _Tasks = value; _Tasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tasks)); OnPropertyChanged(nameof(Tasks)); } } 
+        public ObservableCollection<TaskItem> Tasks
+        {
+            get { return _Tasks; }
+            set { if (_Tasks != value) { _Tasks = value; _Tasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Tasks)); OnPropertyChanged(nameof(Tasks)); } }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
