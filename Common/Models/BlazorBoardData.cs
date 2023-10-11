@@ -26,7 +26,7 @@ namespace Common.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void OverrideHandlers(BlazorBoardData dataToOverride)
+        public void OverrideWithHandlers(BlazorBoardData dataToOverride)
         {
             var newData = new BlazorBoardData();
             foreach (var board in dataToOverride.Boards)

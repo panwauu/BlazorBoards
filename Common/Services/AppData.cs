@@ -40,17 +40,14 @@ namespace Common.Services
                 var dataFromServer = await _httpClient.GetFromJsonAsync<BlazorBoardData>("api/data");
                 await _localStorage.RemoveItemAsync("OfflineChanges");
                 if (dataFromServer is null) return;
-                blazorBoardData.OverrideHandlers(dataFromServer);
-                Console.WriteLine(JsonSerializer.Serialize(blazorBoardData));
+                blazorBoardData.OverrideWithHandlers(dataFromServer);
             }
             catch (Exception ex)
             {
                 await _localStorage.SetItemAsync("OfflineChanges", DateTime.Now);
                 var dataFromStorage = await _localStorage.GetItemAsync<BlazorBoardData>("blazorBoardData");
                 if (dataFromStorage is null) return;
-                blazorBoardData.OverrideHandlers(dataFromStorage);
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(JsonSerializer.Serialize(blazorBoardData));
+                blazorBoardData.OverrideWithHandlers(dataFromStorage);
             }
         }
 
