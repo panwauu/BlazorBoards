@@ -11,5 +11,5 @@ public class BlazorBoard
 
     public ICollection<Board>? Boards { get; set; }
 
-    public ICollection<Label>? Labels { get; set; }
+    public ICollection<Label> Labels { get; set; }
 }

@@ -9,7 +9,9 @@ public class Label
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
 
-    //public Guid BlazorBoardId { get; set; }
+    public Guid BlazorBoardId { get; set; }
+
+    public ICollection<Task> Tasks { get; set; }
 
     [Required]
     [MaxLength(100)]
