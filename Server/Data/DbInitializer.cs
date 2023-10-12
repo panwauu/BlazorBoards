@@ -8,7 +8,7 @@ public static class DbInitializer
     {
         if (context.Labels.Any()) { return; }
 
-        context.Labels.AddRange(new Label[]
+        context.Labels.AddRange(new LabelDB[]
         {
             new() { Name = "prio: low", Color = "#000000", Background = "#aa2222" },
             new() { Name = "prio: high", Color = "#000000", Background = "#22aa22" },

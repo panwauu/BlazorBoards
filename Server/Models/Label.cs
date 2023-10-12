@@ -2,7 +2,7 @@
 
 namespace Server.Models;
 
-public class Label
+public class LabelDB
 {
     public int Id { get; set; }
 
@@ -12,10 +12,10 @@ public class Label
 
     [Required]
     [MaxLength(7)]
-    public string? Color;
+    public string? Color { get; set; }
 
     [Required]
     [MaxLength(7)]
-    public string? Background;
+    public string? Background { get; set; }
 }
 

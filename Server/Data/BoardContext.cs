@@ -10,5 +10,5 @@ public class BoardContext : DbContext
     {
     }
 
-    public DbSet<Label> Labels => Set<Label>();
+    public DbSet<LabelDB> Labels => Set<LabelDB>();
 }

@@ -1,5 +1,6 @@
 using Common.Models;
 using Server.Data;
+using Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,10 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 builder.Services.AddSqlite<BoardContext>("Data Source=DatabaseBoards.db");
+builder.Services.AddScoped<LabelService>();
+
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
