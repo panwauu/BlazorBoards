@@ -1,4 +1,5 @@
 using Common.Models;
+using Server.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSqlite<BoardContext>("Data Source=DatabaseBoards.db");
 
 var app = builder.Build();
 
@@ -35,6 +38,7 @@ app.MapRazorPages();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 
+app.CreateDbIfNotExists();
 
 var data = new BlazorBoardData();
 data.Labels.Add(new Label("Label 1", "#000000", "#AAAA00") { });
