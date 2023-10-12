@@ -25,6 +25,13 @@ namespace Common.Models
             _IsDone = false;
         }
 
+        public ChecklistItem(string Id, string title)
+        {
+            this.Id = Id;
+            _Title = title;
+            _IsDone = false;
+        }
+
         public override bool Equals(object? obj)
         {
             if ((obj == null) || !this.GetType().Equals(obj.GetType())) return false;

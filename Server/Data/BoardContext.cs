@@ -10,5 +10,5 @@ public class BoardContext : DbContext
     {
     }
 
-    public DbSet<LabelDB> Labels => Set<LabelDB>();
+    public DbSet<BlazorBoard> BlazorBoards => Set<BlazorBoard>();
 }

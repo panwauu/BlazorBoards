@@ -28,5 +28,13 @@ namespace Common.Models
             _Color = color;
             _Background = background;
         }
+
+        public Label(string Id, string title, string color, string background)
+        {
+            this.Id = Id;
+            _Title = title;
+            _Color = color;
+            _Background = background;
+        }
     }
 }

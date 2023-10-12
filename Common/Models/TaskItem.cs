@@ -42,5 +42,15 @@ namespace Common.Models
             _Checklist = new ObservableList<ChecklistItem>();
             _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
         }
+
+        public TaskItem(string Id, string Title)
+        {
+            this.Id = Id;
+            _Title = Title;
+            _Labels = new ObservableCollection<string>();
+            _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
+            _Checklist = new ObservableList<ChecklistItem>();
+            _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
+        }
     }
 }

@@ -29,5 +29,13 @@ namespace Common.Models
             _Tasks = new ObservableList<TaskItem>();
             _Tasks.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
         }
+
+        public Board(string Id, string Title, ObservableList<TaskItem> Tasks)
+        {
+            this.Id = Id;
+            _Title = Title;
+            _Tasks = Tasks;
+            _Tasks.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
+        }
     }
 }
