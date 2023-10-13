@@ -1,15 +1,18 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
     public class Board : INotifyPropertyChanged
     {
+        [Required]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         private string _Title;
         private ObservableList<TaskItem> _Tasks;
 
+        [Required]
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
         public ObservableList<TaskItem> Tasks
         {

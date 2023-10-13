@@ -14,6 +14,9 @@ public class BoardsController : ControllerBase
         _boardsService = boardsService;
     }
 
+    /// <summary>
+    /// Returns the current server-side state of the board
+    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(Common.Models.BlazorBoardData), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -24,6 +27,10 @@ public class BoardsController : ControllerBase
         return Results.Ok(blazorBoardData);
     }
 
+    /// <summary>
+    /// Update the server-side state of the board
+    /// </summary>
+    /// <param name="blazorBoardData">New board state to load to the server</param>
     [HttpPut]
     public void Put(Common.Models.BlazorBoardData blazorBoardData)
     {

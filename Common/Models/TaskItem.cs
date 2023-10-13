@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
     public class TaskItem : INotifyPropertyChanged
     {
+        [Required]
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
         private string _Title;
@@ -14,6 +16,7 @@ namespace Common.Models
         private ObservableCollection<string> _Labels;
         private ObservableList<ChecklistItem> _Checklist;
 
+        [Required]
         public string Title { get { return _Title; } set { if (_Title != value) { _Title = value; OnPropertyChanged(nameof(Title)); } } }
         public string? Description { get { return _Description; } set { if (_Description != value) { _Description = value; OnPropertyChanged(nameof(Description)); } } }
         public DateTime? Deadline { get { return _Deadline; } set { if (_Deadline != value) { _Deadline = value; OnPropertyChanged(nameof(Deadline)); } } }
