@@ -5,7 +5,7 @@ namespace Common.Models
 {
     public class TaskItem : INotifyPropertyChanged
     {
-        public readonly string Id = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         private string _Title;
         private string? _Description;

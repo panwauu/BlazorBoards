@@ -11,7 +11,7 @@ public class Label
 
     public Guid BlazorBoardId { get; set; }
 
-    public ICollection<Task> Tasks { get; set; }
+    public ICollection<Task>? Tasks { get; set; }
 
     [Required]
     [MaxLength(100)]

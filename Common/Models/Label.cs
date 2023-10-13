@@ -4,7 +4,7 @@ namespace Common.Models
 {
     public class Label : INotifyPropertyChanged
     {
-        public readonly string Id = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         private string _Title;
         private string _Color;
