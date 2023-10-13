@@ -11,6 +11,9 @@ public class Label
 
     public Guid BlazorBoardId { get; set; }
 
+    [Required]
+    public int Order { get; set; }
+
     public ICollection<Task>? Tasks { get; set; }
 
     [Required]

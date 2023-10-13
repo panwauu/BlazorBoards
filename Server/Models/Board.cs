@@ -11,6 +11,8 @@ public class Board
 
     public Guid BlazorBoardId { get; set; }
 
+    [Required]
+    public int Order { get; set; }
 
     [Required]
     [MaxLength(100)]

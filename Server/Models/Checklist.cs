@@ -12,6 +12,9 @@ public class Checklist
     public Guid TaskId { get; set; }
 
     [Required]
+    public int Order { get; set; }
+
+    [Required]
     [MaxLength(100)]
     public string Title { get; set; } = string.Empty;
 
