@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
@@ -30,6 +31,14 @@ namespace Common.Models
             this.Id = Id;
             _Title = title;
             _IsDone = false;
+        }
+
+        [JsonConstructor]
+        public ChecklistItem(string Id, string Title, bool IsDone)
+        {
+            this.Id = Id;
+            _Title = Title;
+            _IsDone = IsDone;
         }
 
         public override bool Equals(object? obj)

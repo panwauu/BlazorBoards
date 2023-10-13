@@ -18,7 +18,8 @@ public class Task
     [MaxLength(10000)]
     public string? Description { get; set; }
 
-    public DateTime Deadline { get; set; }
+    [DataType(DataType.Date)]
+    public DateTime? Deadline { get; set; }
 
     public ICollection<Label>? Labels { get; set; }
 

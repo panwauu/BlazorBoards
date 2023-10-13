@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
@@ -30,6 +31,15 @@ namespace Common.Models
             _Boards = new();
             _Boards.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Boards));
             _Labels = new();
+            _Labels.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
+        }
+
+        [JsonConstructor]
+        public BlazorBoardData(ObservableList<Board> Boards, ObservableList<Label> Labels)
+        {
+            _Boards = Boards;
+            _Boards.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Boards));
+            _Labels = Labels;
             _Labels.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
         }
     }

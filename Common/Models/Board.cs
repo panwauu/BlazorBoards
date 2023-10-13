@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
@@ -30,6 +31,7 @@ namespace Common.Models
             _Tasks.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Tasks));
         }
 
+        [JsonConstructor]
         public Board(string Id, string Title, ObservableList<TaskItem> Tasks)
         {
             this.Id = Id;

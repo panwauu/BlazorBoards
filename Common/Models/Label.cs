@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
@@ -29,12 +30,13 @@ namespace Common.Models
             _Background = background;
         }
 
-        public Label(string Id, string title, string color, string background)
+        [JsonConstructor]
+        public Label(string Id, string Title, string Color, string Background)
         {
             this.Id = Id;
-            _Title = title;
-            _Color = color;
-            _Background = background;
+            _Title = Title;
+            _Color = Color;
+            _Background = Background;
         }
     }
 }

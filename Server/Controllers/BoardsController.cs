@@ -25,8 +25,8 @@ public class BoardsController : ControllerBase
     }
 
     [HttpPut]
-    public void Put()
+    public void Put(Common.Models.BlazorBoardData blazorBoardData)
     {
-        throw new NotImplementedException();
+        _boardsService.Put(blazorBoardData);
     }
 }

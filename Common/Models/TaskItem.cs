@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace Common.Models
 {
@@ -50,6 +51,19 @@ namespace Common.Models
             _Labels = new ObservableCollection<string>();
             _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
             _Checklist = new ObservableList<ChecklistItem>();
+            _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
+        }
+
+        [JsonConstructor]
+        public TaskItem(string Id, string Title, string? Description, DateTime? Deadline, ObservableCollection<string> Labels, ObservableList<ChecklistItem> Checklist)
+        {
+            this.Id = Id;
+            _Title = Title;
+            _Description = Description;
+            _Deadline = Deadline;
+            _Labels = Labels;
+            _Labels.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(Labels));
+            _Checklist = Checklist;
             _Checklist.PropertyChanged += (sender, e) => OnPropertyChanged(nameof(Checklist));
         }
     }
