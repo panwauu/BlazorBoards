@@ -16,7 +16,7 @@ namespace Common.Services
             await _localStorage.SetItemAsync("blazorBoardData", blazorBoardData);
             try
             {
-                await _httpClient.PutAsJsonAsync("api/data", blazorBoardData);
+                await _httpClient.PutAsJsonAsync("/Boards", blazorBoardData);
                 await _localStorage.RemoveItemAsync("OfflineChanges");
             }
             catch (Exception ex)
@@ -36,7 +36,7 @@ namespace Common.Services
             Console.WriteLine("Initializing...");
             try
             {
-                var dataFromServer = await _httpClient.GetFromJsonAsync<BlazorBoardData>("api/data");
+                var dataFromServer = await _httpClient.GetFromJsonAsync<BlazorBoardData>("/Boards");
                 await _localStorage.RemoveItemAsync("OfflineChanges");
                 if (dataFromServer is null) return;
                 blazorBoardData = dataFromServer;

@@ -4,7 +4,7 @@
     <div class="task-header">
         @foreach(var label in TaskData.Labels)
         {
-            <div class="task-label" style="background:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Background;color:@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Color">@appData.blazorBoardData.Labels.ToList().Find(l => l.Title == label)?.Title</div>
+            <div class="task-label" style="background:@appData.blazorBoardData.Labels.ToList().Find(l => l.Id == label)?.Background;color:@appData.blazorBoardData.Labels.ToList().Find(l => l.Id == label)?.Color">@appData.blazorBoardData.Labels.ToList().Find(l => l.Id == label)?.Title</div>
         }
     </div>
     <div>@TaskData.Title</div>
