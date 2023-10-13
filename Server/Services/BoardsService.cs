@@ -96,7 +96,7 @@ public class BoardsService
         dbBlazorBoard.Boards ??= new List<Board>();
 
         var boardIdsToRemove = dbBlazorBoard.Boards.Select(b => b.Id.ToString()).Except(blazorBoardData.Boards.Select(b => b.Id)).ToList();
-        dbBlazorBoard.Boards.Where(b => idsToRemove.Contains(b.Id.ToString())).ToList().ForEach(b => dbBlazorBoard.Boards.Remove(b));
+        dbBlazorBoard.Boards.Where(b => boardIdsToRemove.Contains(b.Id.ToString())).ToList().ForEach(b => dbBlazorBoard.Boards.Remove(b));
 
         foreach (var (updatedBoard, index) in blazorBoardData.Boards.Select((value, index) => (value, index)))
         {
@@ -137,7 +137,7 @@ public class BoardsService
                 {
                     var task = dbBoard.Tasks.FirstOrDefault(x => x.Id.ToString() == updatedTask.Id);
                     if (task == null)
-                    {                   
+                    {
                         var newTask = new Models.Task() { Id = Guid.Parse(updatedTask.Id), Title = updatedTask.Title, Description = updatedTask.Description, Labels = new List<Label>(), Checklist = new List<Checklist>(), Order = indexTask };
                         foreach (var label in updatedTask.Labels)
                         {
