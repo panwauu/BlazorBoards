@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Threading.Tasks;
 
 namespace Server.Models;
 
+[Index(nameof(BlazorBoardId), nameof(Order), IsUnique = true)]
 public class Label
 {
     [Key]
