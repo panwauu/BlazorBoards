@@ -4,7 +4,8 @@ using Server.Services;
 namespace Server.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
+[Produces("application/json")]
 public class BoardsController : ControllerBase
 {
     private readonly BoardsService _boardsService;
